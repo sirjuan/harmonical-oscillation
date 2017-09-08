@@ -6,9 +6,7 @@ import {Scatter} from 'react-chartjs-2';
 class App extends Component {
   constructor() {
     super();
-    console.log(Scatter)
     this.state = { values: {}, keys: [] }
-    console.log('mäööö')
     this.onFileChange = this.onFileChange.bind(this);
   }
   onFileChange(e) {
@@ -32,7 +30,6 @@ class App extends Component {
 
   }
   render() {
-    console.log('juiiiii')
     return (
       <div className="App">
         <input id="upload" ref="upload" type="file" onChange={this.onFileChange}/>
