@@ -1,71 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {Scatter} from 'react-chartjs-2';
+import './styles/App.css';
+import { Container, Row, Col, Input } from 'reactstrap'
+import ValueTable from './ValueTable';
+import Chart from './Chart'
+import { processFile } from './utils';
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { values: {}, keys: [] }
+    this.state = { values: {} }
     this.onFileChange = this.onFileChange.bind(this);
   }
   onFileChange(e) {
-    const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onload = (event) =>{
-      const lines = event.target.result.split('\n');
-      const [ headerLine, ...contentLines ] = lines;
-      const headers = headerLine.split(' ');
-      const normalizedLines = contentLines.reduce((newLines, line, index) => {
-        const newLine = line.split(' ');
-        const newerLine = newLine.reduce((acc, cur, index) => {
-          return {...acc, [headers[index]]: Number(cur)}
-        }, {});
-        return {...newLines, [index]: {index, ...newerLine}  }
-      }, {});
-      this.setState({values: normalizedLines, keys: headers})
-
-    };
-    reader.readAsText(file);
-
+    reader.onload = (event) => this.setState({ values: processFile(event.target.result) });
+    reader.readAsText(e.target.files[0]);
   }
   render() {
     return (
-      <div className="App">
-        <input id="upload" ref="upload" type="file" onChange={this.onFileChange}/>
-        <div>
+      <Container fluid>
+        <Row>
+          <Input type="file" onChange={this.onFileChange} />
+        </Row>
           { Object.keys(this.state.values).length > 0 &&
-            <div>
-              <Scatter data={{
-                datasets: [{
-                  label: 'Scatter Dataset',
-                  fill: false,
-                  pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-                  pointBorderColor: 'rgba(0, 0, 0, 0)',
-                  borderColor: 'blue',
-                  data: Object.values(this.state.values).map(line => ({x: line['Time(s)'], y: line['Distance(m)']}))
-                }]
-              }} />
-              <table>
-                <thead>
-                  <tr>
-                    { Object.keys(this.state.values['0']).map(key => <th>{key}</th>)}
-                  </tr>
-                </thead>
-                <tbody>
-                  { Object.values(this.state.values).map(line => (
-                    <tr>{Object.values(line).map(value => <td>{value}</td>)}</tr>
-                  ))}
-                </tbody>
-
-              </table>
-            </div>
-
+            <Row>
+              <Col xs='6'>
+                <ValueTable lines={this.state.values}/>
+              </Col>
+              <Col xs='6'>
+                <Chart
+                  type='scatter'
+                  keys={{x: 'Time(s)', y: 'Distance(m)'}}
+                  values={Object.values(this.state.values)}
+                  title='Distance as a function of time'
+                />
+              </Col>
+            </Row>
           }
-        </div>
-
-
-      </div>
+      </Container>
     );
   }
 }
