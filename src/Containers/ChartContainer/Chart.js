@@ -2,10 +2,9 @@ import React from 'react';
 import { Scatter } from 'react-chartjs-2';
 
 const scatterChart = ({color = 'blue', values = [], keys = {}, title = ''}) => {
-  console.log(color)
   const data = {
     datasets: [{
-      label: title,
+      label: `${keys.x} / ${keys.y}`,
       fill: false,
       pointBackgroundColor: 'rgba(0, 0, 0, 0)',
       pointBorderColor: 'rgba(0, 0, 0, 0)',
@@ -13,7 +12,15 @@ const scatterChart = ({color = 'blue', values = [], keys = {}, title = ''}) => {
       data: values.map(line => ({x: line[keys.x], y: line[keys.y]}))
     }]
   }
-  return <Scatter data={data} />
+  const options = {
+
+    title: {
+      display: title ? true : false,
+      text: title,
+      fontSize: 24
+    }
+  }
+  return <Scatter data={data} options={options} />
 };
 
 const charts = {
