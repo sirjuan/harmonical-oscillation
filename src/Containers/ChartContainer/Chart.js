@@ -2,6 +2,7 @@ import React from 'react';
 import { Scatter } from 'react-chartjs-2';
 
 const scatterChart = ({color = 'blue', values = [], keys = {}, title = ''}) => {
+  console.log(color)
   const data = {
     datasets: [{
       label: title,

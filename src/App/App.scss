@@ -1,0 +1,58 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+.header {
+  background-color: $gray-800;
+  padding-left: 50px;
+  input {
+    margin: 20px auto;
+    font-size: 11px;
+    color: $gray-200;
+    @media screen { @media (min-width: 0px) {width: 100px;} }
+    _:-ms-fullscreen, :root .header {background-color: yellow}
+    @supports (-ms-ime-align:auto) {
+    width: auto;
+}
+
+    align-items: baseline;
+    -webkit-appearance: textfield;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    &::-webkit-file-upload-button {
+      background-color: $orange;
+      width: 0;
+      padding: 0;
+      margin: 0;
+      border: none;
+    }
+  //
+
+  }
+  x::-webkit-file-upload-button, input::before {
+    content:'Choose file';
+    display: inline-block;
+    left: -75%;
+    position: absolute;
+    background-color: $orange;
+    -webkit-appearance: button;
+    padding: 0px 8px 2px;
+   }
+}
+
+@supports (-ms-accelerator:true) {
+  input {
+    width: 200px !important;
+  }
+}
+
+.sampleTable {
+  margin-bottom: 0;
+}
+
+input[type=color] {
+  padding: 0 3px;
+}
+
+.card {
+  padding: 15px;
+  margin: 15px;
+}

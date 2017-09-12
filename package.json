@@ -11,12 +11,12 @@
     "react-chartjs-2": "^2.6.2",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.13",
-    "react-transition-group": "^2.2.0",
+    "react-transition-group": "^1.2.0",
     "reactstrap": "^4.8.0"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/styles",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./node_modules src/ -o src/styles --watch --recursive",
+    "build-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/styles/built",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./node_modules src/ -o src/styles/built --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
